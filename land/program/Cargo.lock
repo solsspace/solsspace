@@ -4597,7 +4597,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solspace"
+name = "solsspace"
 version = "0.0.1"
 dependencies = [
  "arrayref",

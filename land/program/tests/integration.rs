@@ -15,7 +15,7 @@ fn test_initialise_land_plane() {
     let program_id = Pubkey::new_unique();
 
     let (test_validator, payer) = TestValidatorGenesis::default()
-        .add_program("solspace_land", program_id)
+        .add_program("solsspace_land", program_id)
         .start();
     let (rpc_client, recent_blockhash, _fee_calculator) = test_validator.rpc_client();
 

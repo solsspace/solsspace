@@ -125,7 +125,7 @@ impl LandPlane {
 //
 // Land Asset Account
 //
-pub const LAND_ASSET_ACC_PREFIX: &str = "solspace-land";
+pub const LAND_ASSET_ACC_PREFIX: &str = "solsspace-land";
 
 pub const LAND_ASSET_ACC_DATA_LEN: usize =
 1 + // verison

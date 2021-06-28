@@ -4592,7 +4592,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solspace-land"
+name = "solsspace-land"
 version = "0.0.1"
 dependencies = [
  "arrayref",

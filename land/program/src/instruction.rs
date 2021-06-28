@@ -42,7 +42,7 @@ pub enum LandInstruction {
     ///     This account should already exist and have been initialised through invocation
     ///     of the InitialiseLandAssetAcc method on the land program.
     ///     This account should be a PDA corresponding to the next piece of land.
-    ///     i.e. PDA of (['solspace-land', land_plane_acc_pubkey, x, y], land_program_acc_pubkey)
+    ///     i.e. PDA of (['solsspace-land', land_plane_acc_pubkey, x, y], land_program_acc_pubkey)
     /// 2. `[writable] land_plane_acc`
     ///     Public key of the land plane account from which the next piece of land will be minted.
     /// 3. `[] nft_assoc_token_acc`
@@ -95,7 +95,7 @@ pub fn initialize_land_plane(
 ///     that the given owner would like to associate the new piece of land with their NFT.
 /// * `[writable] land_asset_acc_pubkey`
 ///     This key should be a PDA corresponding to the next piece of land.
-///     i.e. PDA of (['solspace-land', land_plane_acc_pubkey, x, y], land_program_acc_pubkey)
+///     i.e. PDA of (['solsspace-land', land_plane_acc_pubkey, x, y], land_program_acc_pubkey)
 /// * `[writable] land_plane_acc_pubkey`
 ///     Public key of the land plane account from which the next piece of land will be minted.
 /// * `[] nft_assoc_token_acc_pubkey`

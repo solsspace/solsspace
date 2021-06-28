@@ -1,4 +1,4 @@
-//! A Solspace Land program for the Solana blockchain.
+//! A solsspace Land program for the Solana blockchain.
 
 pub mod entrypoint;
 pub mod error;
