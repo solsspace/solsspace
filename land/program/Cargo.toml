@@ -1,0 +1,31 @@
+[package]
+name = "solspace-land"
+version = "0.0.1"
+description = "Solspace Land"
+authors = ["Bernard Bussy <bernard.r.bussy@gmail.com>"]
+repository = "https://github.com/BRBussy/solspace"
+license = "Apache-2.0"
+edition = "2018"
+publish = false
+
+[dependencies]
+arrayref = "0.3.6"
+num-derive = "0.3"
+num-traits = "0.2"
+num_enum = "0.5.1"
+solana-program = "1.6.8"
+thiserror = "1.0"
+borsh = "0.8.2"
+
+[features]
+test-bpf = []
+
+[dev-dependencies]
+solana-client = "1.6.10"
+assert_matches = "1.4.0"
+solana-program-test = "1.6.8"
+solana-sdk = "1.6.8"
+solana-validator = "1.6.8"
+
+[lib]
+crate-type = ["cdylib", "lib"]
