@@ -2,5 +2,4 @@
 title: solsspace Land Program
 ---
 
-# solsspace
-solsspace is a semi-infinite😅 meta-verse protocol built on top of the solana blockchain.
+# land program...

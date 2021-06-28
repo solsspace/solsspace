@@ -3,9 +3,9 @@ name = "solsspace-land"
 version = "0.0.1"
 description = "solsspace Land"
 authors = ["Bernard Bussy <bernard.r.bussy@gmail.com>"]
-repository = "https://github.com/BRBussy/solsspace"
-license = "Apache-2.0"
-edition = "2018"
+repository = "https://github.com/solsspace/solsspace"
+license = "GPL-3.0"
+edition = "2007"
 publish = false
 
 [dependencies]
