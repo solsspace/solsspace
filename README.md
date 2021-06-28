@@ -5,3 +5,5 @@ It is made up of a few contracts that provide the ability to mint and control as
 
 ## Land
 The land smart contract provides the ability to mint and manage solsspace land assets as illustrated below.
+
+![land-overview](https://raw.githubusercontent.com/solsspace/solsspace/main/assets/img/land-overview.png)
