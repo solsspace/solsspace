@@ -21,10 +21,30 @@ pub enum LandInstruction {
     /// 
     /// Accounts expected by this instruction:
     /// 
-    ///   0. `[writable] land_place_acc`
+    /// 0. `[writable] land_place_acc`
     ///     Land plane account to initialise.
-    ///   1. `[] rent_sysvar_acc`
+    /// 1. `[] rent_sysvar_acc`
     InitialiseLandPlane,
+
+
+    /// Initialise Land Asset Account
+    /// 
+    /// Initialise land asset account before using it in a mint next
+    /// instruction.
+    /// 
+    /// Accounts expected by this instruction:
+    /// 
+    /// 1. `[signer] rent_payer_acc`
+    ///     Key of account responsible for paying required rent for the new
+    ///     land_asset_acc
+    /// 2. `[writable] land_asset_acc`
+    ///     Key of new land asset account.
+    ///     This key should be a PDA of:
+    ///     (['solsspace-land', land_plane_acc_pubkey, x, y], land_program_acc_pubkey)
+    ///     Typically this would correspond to the next piece of land that will be minted.
+    /// 3. `[] system_program_acc`
+    /// 4. `[] rent_sysvar_acc`
+    InitialiseLandAsset,
 
     /// Mint Land Pience
     /// 
@@ -40,7 +60,7 @@ pub enum LandInstruction {
     ///     would like to associate the new piece of land with their NFT.
     /// 1. `[writable] land_asset_acc`
     ///     This account should already exist and have been initialised through invocation
-    ///     of the InitialiseLandAssetAcc method on the land program.
+    ///     of the InitialiseLandAsset method on the land program.
     ///     This account should be a PDA corresponding to the next piece of land.
     ///     i.e. PDA of (['solsspace-land', land_plane_acc_pubkey, x, y], land_program_acc_pubkey)
     /// 2. `[writable] land_plane_acc`
