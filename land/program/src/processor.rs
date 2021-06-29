@@ -40,7 +40,7 @@ pub fn process_instruction(
                 accounts,
             )
         },
-        LandInstruction::InitialiseLandAsset => {
+        LandInstruction::InitialiseNextLandAsset => {
             msg!("Instruction: Initialise Land Asset");
             process_initialise_land_asset(
                 program_id,
@@ -102,17 +102,10 @@ pub fn process_initialise_land_asset(
 ) -> ProgramResult {
     let account_info_iter = &mut accounts.iter();
     let rent_payer_acc_info = next_account_info(account_info_iter)?;
-    let land_aset_acc_info = next_account_info(account_info_iter)?;
+    let land_asset_acc_info = next_account_info(account_info_iter)?;
+    let land_plane_acc_info = next_account_info(account_info_iter)?;
     let rent_sysvar_acc_info = next_account_info(account_info_iter)?;
     let system_program_acc_info = next_account_info(account_info_iter)?;
-
-    create_or_allocate_account_raw(
-        program_id,
-        rent_payer_acc_info,
-        rent_sysvar_acc_info,
-        system_program_acc_info,
-        LAND_ASSET_ACC_DATA_LEN,
-    )?;
 
     Ok(())
 }
