@@ -13,13 +13,13 @@ use {
 /// Errors that may be returned by the Token program.
 #[derive(Clone, Debug, Eq, Error, FromPrimitive, PartialEq)]
 pub enum LandError {
-    /// Account is already in use
-    #[error("Account already in use")]
-    AlreadyInUse,
-
     /// Signature error
     #[error("Signature error")]
     SignatureError,    
+
+    /// Land plane account is already initialised
+    #[error("Land plane account already initialised")]
+    LandPlaneAccAlreadyInitialised,
 
     /// Land plane account is uninitialised
     #[error("Land plane account uninitialsed")]
@@ -41,9 +41,13 @@ pub enum LandError {
     #[error("Invalid land asset acc key")]
     InvalidLandAssetAccKey,    
 
+    /// Land asset account is already initialised
+    #[error("Land plane account already initialised")]
+    LandAssetAccAlreadyInitialised,
+
     /// Land asset account is uninitialised
-    #[error("Land asset account uninitialsed")]
-    LandAssetAccUninitialised,    
+    #[error("Land plane account uninitialsed")]
+    LandAssetAccUninitialised,
 }
 
 impl PrintProgramError for LandError {

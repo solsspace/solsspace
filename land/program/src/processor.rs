@@ -70,9 +70,9 @@ pub fn process_initialise_land_plane(
     // parse the uninitialised land plane account state
     let mut land_plane_acc_state = LandPlane::from_account_info(land_plane_acc_info)?;
 
-    // confirm that account is not already in use
+    // confirm that account is not already initialised
     if land_plane_acc_state.version != LandPlaneVersion::Uninitialised {
-        return Err(LandError::AlreadyInUse.into());
+        return Err(LandError::LandPlaneAccAlreadyInitialised.into());
     }
 
     // parse rent from rent account info
@@ -100,12 +100,28 @@ pub fn process_initialise_land_asset(
     program_id: &Pubkey,
     accounts: &[AccountInfo],
 ) -> ProgramResult {
+    // prepare an account info iterator and get a handle
+    // on required accounts
     let account_info_iter = &mut accounts.iter();
     let rent_payer_acc_info = next_account_info(account_info_iter)?;
     let land_asset_acc_info = next_account_info(account_info_iter)?;
     let land_plane_acc_info = next_account_info(account_info_iter)?;
     let rent_sysvar_acc_info = next_account_info(account_info_iter)?;
     let system_program_acc_info = next_account_info(account_info_iter)?;
+
+    // parse land asset account state and confirm
+    // that the given account has NOT yet been initialised
+    let land_asset_acc_state = LandAsset::from_account_info(land_asset_acc_info)?;
+    if land_asset_acc_state.version != LandAssetVersion::Uninitialised {
+        return Err(LandError::LandAssetAccUninitialised.into());
+    }    
+
+    // parse land plane account state and confirm
+    // that the given account has been initialised
+    let land_plane_acc_state = LandPlane::from_account_info(land_plane_acc_info)?;
+    if land_plane_acc_state.version == LandPlaneVersion::Uninitialised {
+        return Err(LandError::LandPlaneAccUninitialised.into());
+    }
 
     Ok(())
 }
@@ -158,7 +174,7 @@ pub fn process_mint_next(
     let land_asset_acc_state = LandAsset::from_account_info(land_asset_acc_info)?;
     if land_asset_acc_state.version == LandAssetVersion::Uninitialised {
         return Err(LandError::LandAssetAccUninitialised.into());
-    }    
+    }
 
     Ok(())
 }
@@ -253,7 +269,7 @@ mod tests {
         // trying to call initialise again fails
         //
         assert_eq!(
-            Err(LandError::AlreadyInUse.into()),
+            Err(LandError::LandPlaneAccAlreadyInitialised.into()),
             do_process_instruction(
                 initialize_land_plane(&program_id, &land_plane_acc_key).unwrap(),
                 vec![&mut land_plane_acc, &mut rent_sysvar]
