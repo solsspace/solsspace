@@ -90,7 +90,7 @@ pub fn initialize_land_plane(
 /// * `land_program_acc_pubkey`
 ///     Public key of the land program account - aka. program ID.
 /// * `[signer] nft_assoc_token_acc_owner_pubkey`
-///     Public key of the normal system account that is the owner of the NFT holding SPL
+///     Public key of the normal system account that is the owner of the given NFT holding SPL
 ///     associate token account. A signature is required for this account to confirm
 ///     that the given owner would like to associate the new piece of land with their NFT.
 /// * `[writable] land_asset_acc_pubkey`
