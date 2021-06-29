@@ -2,6 +2,7 @@ use {
     crate::{
         error::LandError,
     },
+    arrayref::{array_mut_ref},
     borsh::{BorshDeserialize, BorshSerialize},
     solana_program::{
         entrypoint::ProgramResult,
@@ -9,6 +10,7 @@ use {
         program_error::ProgramError,
         borsh::try_from_slice_unchecked,
         pubkey::Pubkey,
+        program_pack::{Pack, Sealed},
     },
 };
 
@@ -159,6 +161,32 @@ impl LandAsset {
 
         // and return the result
         Ok(result)
+    }
+}
+
+impl Sealed for LandAsset {}
+
+impl Pack for LandAsset {
+    const LEN: usize = LAND_ASSET_ACC_DATA_LEN;
+    fn unpack_from_slice(data: &[u8]) -> Result<Self, ProgramError> {
+        // confirm that given data length is as expected
+        if data.len() != LAND_ASSET_ACC_DATA_LEN {
+            return Err(LandError::IncorrectDataSize.into());
+        }
+
+        // otherwise parse
+        let result: LandAsset = try_from_slice_unchecked(data)?;
+
+        // and return the result
+        Ok(result)
+    }
+
+    fn pack_into_slice(&self, dst: &mut [u8]) {
+        let dst = array_mut_ref![dst, 0, LAND_ASSET_ACC_DATA_LEN];
+        let res = self.try_to_vec().unwrap();
+        for (i, x) in res.iter().enumerate() {
+            dst[i] = *x
+        }
     }
 }
 
