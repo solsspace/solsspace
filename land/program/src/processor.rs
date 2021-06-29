@@ -36,6 +36,12 @@ pub fn process_instruction(
                 accounts,
             )
         },
+        LandInstruction::InitialiseLandAsset => {
+            msg!("Instruction: Initialise Land Asset");
+            process_initialise_land_asset(
+                accounts,
+            )
+        }
         LandInstruction::MintNext => {
             msg!("Instruction: Mint Next");
             process_mint_next(
@@ -81,6 +87,13 @@ pub fn process_initialise_land_plane(
     // then serialize the land plane account state again
     land_plane_acc_state.serialize(&mut *land_plane_acc_info.data.borrow_mut())?;
     
+    Ok(())
+}
+
+/// Initialise a new Land Asset
+pub fn process_initialise_land_asset(
+    accounts: &[AccountInfo],
+) -> ProgramResult {
     Ok(())
 }
 
