@@ -47,7 +47,7 @@ pub fn process_instruction(
                 accounts,
             )
         }
-        LandInstruction::MintNext => {
+        LandInstruction::MintNextLandAsset => {
             msg!("Instruction: Mint Next");
             process_mint_next(
                 program_id,

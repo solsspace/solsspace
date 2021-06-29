@@ -51,7 +51,7 @@ pub enum LandInstruction {
 
     /// Mint Land Pience
     /// 
-    /// The `MintNext` instruction will mint the next piece of land
+    /// The `MintNextLandAsset` instruction will mint the next piece of land
     /// linking it to the given SPL NFT. This renders the owner of
     /// the NFT the owner of the new piece of land.
     /// 
@@ -73,7 +73,7 @@ pub enum LandInstruction {
     ///     `nft_assoc_token_acc_owner` and should hold a balance of 1.
     /// 4. `[] nft_mint_acc`
     ///     The SPL NFT Mint account.
-    MintNext,
+    MintNextLandAsset,
 }
 
 /// Creates an `InitialiseLandPlane` instruction.
@@ -108,7 +108,7 @@ pub fn initialize_land_plane(
     })
 }
 
-/// Creates a `MintNext` instruction.
+/// Creates a `MintNextLandAsset` instruction.
 /// 
 /// * `land_program_acc_pubkey`
 ///     Public key of the land program account - aka. program ID.
@@ -138,7 +138,7 @@ pub fn mint_next(
     check_program_account(land_program_acc_pubkey)?;
 
     // prepare data to pass in instruction
-    let data = LandInstruction::MintNext.try_to_vec().unwrap();
+    let data = LandInstruction::MintNextLandAsset.try_to_vec().unwrap();
 
     // prepare list of accounts to pass in instruction
     let accounts = vec![
