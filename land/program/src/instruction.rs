@@ -6,6 +6,7 @@ use {
         pubkey::Pubkey,
         instruction::{AccountMeta, Instruction},
         sysvar,
+        system_program
     },
 };
 
@@ -99,6 +100,54 @@ pub fn initialize_land_plane(
         AccountMeta::new(*land_plane_acc_pubkey, false),
         // those that require read-only access
         AccountMeta::new_readonly(sysvar::rent::id(), false),
+    ];
+
+    Ok(Instruction {
+        program_id: *land_program_acc_pubkey,
+        accounts,
+        data,
+    })
+}
+
+/// Creates an `InitialiseNextLandAsset` instruction.
+/// 
+/// * `land_program_acc_pubkey`
+///     Public key of the land program account - aka. program ID.
+/// * `[signer] rent_payer_acc_pubkey`
+///     Public key of account responsible for paying required rent for the new
+///     land_asset_acc.
+/// * `[writable] land_asset_acc_pubkey`
+///     This key should be a PDA corresponding to the next piece of land.
+///     i.e. PDA of (['solsspace-land', land_plane_acc_pubkey, x, y], land_program_acc_pubkey)
+/// * `[] land_plane_acc_pubkey`
+///     Public key of the land plane account from which the next piece of land will be minted.
+pub fn initialize_next_land_asset(
+    land_program_acc_pubkey: &Pubkey,
+    rent_payer_acc_pubkey: &Pubkey,
+    land_asset_acc_pubkey: &Pubkey,
+    land_plane_acc_pubkey: &Pubkey,
+) -> Result<Instruction, ProgramError> {
+    check_program_account(land_program_acc_pubkey)?;
+    let data = LandInstruction::InitialiseNextLandAsset.try_to_vec().unwrap();
+
+    // prepare list of account to pass to the instruction
+    let accounts = vec![
+        // 1st
+        // Addresses requiring signatures are 1st, and in the following order:
+        //
+        // those that require write access
+        // those that require read-only access
+        AccountMeta::new(*rent_payer_acc_pubkey, false),        
+
+        // 2nd
+        // Addresses not requiring signatures are 2nd, and in the following order:
+        //
+        // those that require write access        
+        AccountMeta::new(*land_asset_acc_pubkey, false),        
+        // those that require read-only access
+        AccountMeta::new(*land_plane_acc_pubkey, false),
+        AccountMeta::new_readonly(sysvar::rent::id(), false),
+        AccountMeta::new_readonly(system_program::id(), false),
     ];
 
     Ok(Instruction {
