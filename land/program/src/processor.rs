@@ -7,11 +7,15 @@ use {
         state::{
             LAND_PLANE_ACC_DATA_LEN,
             LAND_ASSET_ACC_PREFIX,
+            LAND_ASSET_ACC_DATA_LEN,
             LandPlane,
             LandPlaneVersion,
             LandAsset,
             LandAssetVersion,            
         },
+        utils::{
+            create_or_allocate_account_raw,
+        }
     },
     borsh::{BorshDeserialize,BorshSerialize},
     solana_program::{
@@ -39,6 +43,7 @@ pub fn process_instruction(
         LandInstruction::InitialiseLandAsset => {
             msg!("Instruction: Initialise Land Asset");
             process_initialise_land_asset(
+                program_id,
                 accounts,
             )
         }
@@ -92,8 +97,23 @@ pub fn process_initialise_land_plane(
 
 /// Initialise a new Land Asset
 pub fn process_initialise_land_asset(
+    program_id: &Pubkey,
     accounts: &[AccountInfo],
 ) -> ProgramResult {
+    let account_info_iter = &mut accounts.iter();
+    let rent_payer_acc_info = next_account_info(account_info_iter)?;
+    let land_aset_acc_info = next_account_info(account_info_iter)?;
+    let rent_sysvar_acc_info = next_account_info(account_info_iter)?;
+    let system_program_acc_info = next_account_info(account_info_iter)?;
+
+    create_or_allocate_account_raw(
+        program_id,
+        rent_payer_acc_info,
+        rent_sysvar_acc_info,
+        system_program_acc_info,
+        LAND_ASSET_ACC_DATA_LEN,
+    )?;
+
     Ok(())
 }
 
@@ -157,9 +177,6 @@ mod tests {
         instruction::{
             initialize_land_plane,
             mint_next,
-        },
-        state::{
-            LAND_ASSET_ACC_DATA_LEN,
         },
     };
     use solana_program::{
