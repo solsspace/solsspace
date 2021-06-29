@@ -48,8 +48,8 @@ pub fn process_instruction(
             )
         }
         LandInstruction::MintNextLandAsset => {
-            msg!("Instruction: Mint Next");
-            process_mint_next(
+            msg!("Instruction: Mint Next Land Asset");
+            process_mint_next_land_asset(
                 program_id,
                 accounts,
             )
@@ -127,7 +127,7 @@ pub fn process_initialise_land_asset(
 }
 
 /// Mint next piece of land
-pub fn process_mint_next(
+pub fn process_mint_next_land_asset(
     program_id: &Pubkey,
     accounts: &[AccountInfo],
 ) -> ProgramResult {
@@ -185,7 +185,7 @@ mod tests {
     use crate :: {
         instruction::{
             initialize_land_plane,
-            mint_next,
+            mint_next_land_asset,
         },
     };
     use solana_program::{
@@ -302,7 +302,7 @@ mod tests {
         assert_eq!(
             Err(LandError::LandPlaneAccUninitialised.into()),
             do_process_instruction(
-                mint_next(
+                mint_next_land_asset(
                     &program_id,
                     &nft_assoc_token_acc_owner_acc_pubkey,
                     &land_asset_acc_wrong_pubkey,
@@ -335,7 +335,7 @@ mod tests {
         assert_eq!(
             Err(LandError::InvalidLandAssetAccKey.into()),
             do_process_instruction(
-                mint_next(
+                mint_next_land_asset(
                     &program_id,
                     &nft_assoc_token_acc_owner_acc_pubkey,
                     &land_asset_acc_wrong_pubkey,
@@ -370,7 +370,7 @@ mod tests {
         assert_eq!(
             Err(LandError::LandAssetAccUninitialised.into()),
             do_process_instruction(
-                mint_next(
+                mint_next_land_asset(
                     &program_id,
                     &nft_assoc_token_acc_owner_acc_pubkey,
                     &land_asset_acc_pubkey,

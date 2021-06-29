@@ -126,7 +126,7 @@ pub fn initialize_land_plane(
 ///     `nft_assoc_token_acc_owner_pubkey` and should hold a balance of 1.
 /// * `[] nft_mint_acc_pubkey`
 ///     Public key of the SPL NFT Mint account.
-pub fn mint_next(
+pub fn mint_next_land_asset(
     land_program_acc_pubkey: &Pubkey,
     nft_assoc_token_acc_owner_pubkey: &Pubkey,
     land_asset_acc_pubkey: &Pubkey,
